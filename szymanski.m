@@ -18,15 +18,15 @@
 -- Constants and Variables
 
 Const
-	ProcCount: 6; -- Number of processes
+	ProcCount: 11; -- Number of processes
 	LineCount: 14; -- Number of lines of code
 
 Type
-	Pid: Scalarset(ProcCount);	-- Processor ID
+	Pid: 0..(ProcCount-1);	-- Processor ID
 	PC: 0..(LineCount-1);
 
 Var
-	flags: Array[Pid] of Scalarset(5);
+	flags: Array[Pid] of 0..4;
 	pcs: Array[Pid] of PC;
 
 -- Rules
@@ -86,7 +86,8 @@ Ruleset p: Pid Do
 	Rule "Line 05"
 		(pcs[p] = 5)
 		& (Exists p1: Pid Do
-			(flags[p1] = 4))
+			(flags[p1] = 4)
+		Endexists)
 	==>
 		pcs[p] := 6;
 	Endrule;
@@ -101,9 +102,9 @@ Ruleset p: Pid Do
 	Rule "Line 07"
 		(pcs[p] = 7)
 		& (Forall p1: Pid Do
-			(p1 >= p)
+			((p1 >= p)
 			| (flags[p1] = 0)
-			| (flags[p1] = 1)
+			| (flags[p1] = 1))
 		Endforall)
 	==>
 		pcs[p] := 8;
@@ -129,7 +130,7 @@ Ruleset p: Pid Do
 	Endrule;
 
 	Rule "Line 10"
-		(pcs[p] == 10)
+		(pcs[p] = 10)
 	==>
 		flags[p] := 0;
 		pcs[p] := 0;
