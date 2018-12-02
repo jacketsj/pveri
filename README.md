@@ -1,4 +1,5 @@
-# qsim
-Quantum Simulation using CUDD
+# pveri
+Formal verification for Parallel and Concurrent Systems
 
-To use given build.sh file, should have CUDD in local directory (compiled).
+Dependencies:
+CMurphi
