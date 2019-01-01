@@ -10,7 +10,7 @@ proctype FaultyProc() {
 			:: i < 4 -> i++;
 			:: i == 4 -> break;
 		od
-	}; goto step;
+	};
 }
 
 proctype CorrectProc() {
@@ -24,7 +24,7 @@ proctype CorrectProc() {
 	step: atomic {
 		if
 			:: (nrcvd < nsnt + 1) -> nrcvd = rcvd + 1;
-			:: nrcvd = rcvd;
+			:: else: nrcvd = rcvd;
 		fi;
 		rcvd = nrcvd;
 		if
